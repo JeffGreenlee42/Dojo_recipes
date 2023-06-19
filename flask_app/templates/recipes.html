@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/my_style.css') }}">
+    <title>Recipes</title>
+</head>
+<body>
+    <h2>Welcome, {{session.first_name}}</h2>
+    <div class="banner d-flex flex-row justify-content-between">
+        <h4>All posted Recipes</h4>
+        <div class="actions">
+            <a class="actions-link" href="/recipes/create_recipe">+ Create</a>
+            <a class="actions-link" href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="container d-flex flex-row">
+        <div class="recipes d-flex flex-column justify-content-start">
+            <table class="table table-striped recipes-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Under</th>
+                        <th>Posted by</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in all_recipes %}
+                        <tr>
+                            <td>{{recipe.name}}</td>
+                            <td>{{recipe.under30}}</td>
+                            <td>{{recipe.first_name}}</td>
+                            <td><a href="">View Recipe</a> | <a href="">Edit</a> | <a href="">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
