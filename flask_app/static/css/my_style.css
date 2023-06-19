@@ -1,13 +1,27 @@
 body {
     width: 99%;
-    height: 99%;
+    /* height: 99%; */
 }
 
 .container {
     justify-content: center;
     height: 90%;
     margin-top: 40px;
-    /* width: auto; */
+    border: solid 2px red;
+    /* width: 99%; */
+}
+
+.display-container {
+    width: 70%;
+    border: solid 2px black;
+}
+
+.table {
+    width: 100%;
+}
+
+.recipes_table {
+    width: max-content;
 }
 
 .banner {
@@ -87,7 +101,17 @@ H2 {
     
 }
 
+.recipe-panel {
+    width: 99%;
+}
 
+.recipe-label {
+    width: 200px;
+}
+
+.recipe-content {
+    width: 50%;
+}
 
 .btn-post {
     margin-top: 10px;

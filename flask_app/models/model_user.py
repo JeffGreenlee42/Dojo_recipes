@@ -67,3 +67,4 @@ class User:
         if not result:
             return False
         return cls(result[0])
+    

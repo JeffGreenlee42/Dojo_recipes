@@ -18,23 +18,23 @@
         </div>
     </div>
     <div class="container d-flex flex-row">
-        <div class="recipes d-flex flex-column justify-content-start">
-            <table class="table table-striped recipes-table">
+        <div class="recipes">
+            <table class="table table-striped recipes-table" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Under</th>
-                        <th>Posted by</th>
-                        <th>Actions</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Under</th>
+                        <th scope="col">Posted by</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for recipe in all_recipes %}
                         <tr>
-                            <td>{{recipe.name}}</td>
+                            <td scope="row">{{recipe.name}}</td>
                             <td>{{recipe.under30}}</td>
-                            <td>{{recipe.first_name}}</td>
-                            <td><a href="">View Recipe</a> | <a href="">Edit</a> | <a href="">Delete</a></td>
+                            <td>{{recipe.posted_by}}</td>
+                            <td><a href="/recipes/get_one/{{recipe.recipe_id}}">View Recipe</a> | <a href="/recipes/edit_recipe/{{recipe.recipe_id}}">Edit</a> | <a href="/recipes/delete/{{recipe.recipe_id}}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

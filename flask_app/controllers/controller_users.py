@@ -33,28 +33,26 @@ def register():
         data['pw_hash'] = pw_hash
         user_id = User.add_user(data)
         session['user_id'] = user_id
-        print("The user has been added to the DB!")
         return redirect("/recipes")
     return redirect("/")
 
 
 @app.route("/login", methods=["POST"])
 def login():
-    print("We are in route Login")
-    session['login_email'] = request.form['login_email']
-    if 'user_id' not in session:
-        print("user_id is NOT in session - redirecting to /")
-        return redirect('/')
     user = User.get_by_email(request.form)
     if not user:
         flash("Invalid email or Password", "login")
         return redirect('/')
-    # for re-populating email field if login fails
     if not bcrypt.check_password_hash(user.password, request.form['login_password']):
         flash("Invalid email or Password", "login")
         return redirect('/')
+    session['login_email'] = user.email
     session['user_id'] = user.id
-    return redirect("/")
+    session['first_name'] = user.first_name
+    if 'user_id' not in session:
+        print("user_id is NOT in session - redirecting to /")
+        return redirect('/')
+    return redirect("/recipes")
 
 
 @app.route("/logout")
