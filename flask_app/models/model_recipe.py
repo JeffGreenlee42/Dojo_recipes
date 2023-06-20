@@ -94,4 +94,10 @@ class Recipe:
         if not result:
             return False
         return True
+    
+    @classmethod
+    def delete_recipe(cls, data):
+        query =  """DELETE FROM recipes WHERE id = %(recipe_id)s"""
+        result = connectToMySQL(db).query_db(query, data)
+        return result
 

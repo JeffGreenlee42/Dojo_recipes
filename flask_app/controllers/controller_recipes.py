@@ -9,7 +9,7 @@ def recipes():
         return render_template("/")
     all_recipes = []
     recipes = Recipe.get_all()
-    print(f"in route /recipes: recipes is {recipes}")
+    # print(f"in route /recipes: recipes is {recipes}")
     for recipe in recipes:
         under30 = "No"
         if recipe['under30'] > 0:
@@ -27,7 +27,14 @@ def recipes():
 
 @app.route("/recipes/create_recipe")
 def create_recipe():
-    return render_template("new_recipe.html")
+    recipe = {
+        'recipe_name': '',
+        'description': '',
+        'instructions': '',
+        'date_made': '',
+        'under30': ''
+    }
+    return render_template("new_recipe.html", recipe = recipe)
 
 @app.route("/recipes/add_recipe", methods=["POST"])
 def add_recipe():
@@ -45,16 +52,15 @@ def add_recipe():
         'instructions': request.form['instructions'],
         'date_made': request.form['date_made'],
         'under30': request.form['under30']
-        
     }
+    print(f"in route new_recipe(): recipe is {recipe}")
     session['name'] = request.form['recipe_name']
     session['description'] = request.form['description']
     session['instructions'] = request.form['instructions']
     session['date_made'] = request.form['date_made']
     session['under30'] = request.form['under30']
-    return render_template("new_recipe.html", recipe = request.form)
+    return render_template("new_recipe.html", recipe = recipe)
 
-    
     return redirect("/recipes")
 
 @app.route("/recipes/get_one/<int:recipe_id>")
@@ -80,6 +86,15 @@ def change_recipe():
     if not valid:
         return render_template("edit_recipe.html", recipe = request.form )
     result = Recipe.change_order(request.form)
+    return redirect("/recipes")
+
+@app.route("/recipes/delete/<int:recipe_id>")
+def delete_recipe(recipe_id):
+    print(f"in route delete_recipe: recipe_id is {recipe_id}")
+    recipe_id = {
+        'recipe_id': recipe_id
+    }
+    Recipe.delete_recipe(recipe_id)
     return redirect("/recipes")
 
 
