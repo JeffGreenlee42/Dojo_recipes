@@ -7,8 +7,11 @@ body {
     justify-content: center;
     height: 90%;
     margin-top: 40px;
-    border: solid 2px red;
     /* width: 99%; */
+}
+
+.error_message {
+    color: red;
 }
 
 .display-container {
@@ -85,6 +88,7 @@ H2 {
 }
 
 .panel-left {
+    background-color: whitesmoke;
     margin-left: 20px;
     margin-right: 40px;
     padding: 40px 40px;
@@ -92,6 +96,7 @@ H2 {
 }
 
 .panel-right {
+    background-color: whitesmoke;
     background-color: whitesmoke;
     height: 400px;
     margin-left: 20px;

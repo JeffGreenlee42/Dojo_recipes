@@ -19,7 +19,8 @@ class Recipe:
     @staticmethod
     def validate_recipe(new_recipe):
         isValid = True
-        if len(new_recipe['name']) < 3:
+        print(f"in valide_recipe: new_recipe is: {new_recipe}")
+        if len(new_recipe['recipe_name']) < 3:
             flash("The recipe name must at least 3 characters", "recipe")
             isValid = False
         if len(new_recipe['description']) < 3:
@@ -28,6 +29,8 @@ class Recipe:
         if len(new_recipe['instructions']) < 3:
             flash("The Instructions must not be empty", "recipe")
             isValid = False
+        if len(new_recipe['date_made']) < 1:
+            flash("Date made value must be provided", "recipe")
         return isValid
     
     @classmethod
@@ -73,6 +76,7 @@ class Recipe:
         if not recipe:
             return False
         print(f"in get_one in recipe model: recipe is {recipe}")
+        recipe[0]['raw_date_made'] = recipe[0]['date_made']
         recipe[0]['date_made'] = recipe[0]['date_made'].strftime("%B %d %Y")
         if recipe[0]['under30'] > 0:
             recipe[0]['under30'] = "Yes"
@@ -80,4 +84,14 @@ class Recipe:
             recipe[0]['under30'] = "No"
         print(f"Final recipe is: {recipe}")
         return recipe[0]
+
+    @classmethod
+    def change_recipe(cls, data):
+        query = """UPDATE recipes SET name = %(name)s, under30 = %(under30)s, 
+                    description = %(description)s, instructions = %(instructions)s, 
+                    date_made = %(date_made)s WHERE id = %(recipe_id)s"""
+        result = connectToMySQL(db).query_db(query, data)
+        if not result:
+            return False
+        return True
 
