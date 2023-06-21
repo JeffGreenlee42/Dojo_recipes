@@ -9,16 +9,18 @@
     <title>Recipes</title>
 </head>
 <body>
-    <h2>Welcome, {{session.first_name}}</h2>
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h2>Welcome, {{session.first_name}}</h2>
+            <div class="actions">
+                <a class="actions-link" href="/recipes/create_recipe">+ Create</a>
+                <a class="actions-link" href="/logout">Logout</a>
+            </div>
+        </div>
     <div class="banner d-flex flex-row justify-content-between">
         <h4>All posted Recipes</h4>
-        <div class="actions">
-            <a class="actions-link" href="/recipes/create_recipe">+ Create</a>
-            <a class="actions-link" href="/logout">Logout</a>
-        </div>
     </div>
-    <div class="container d-flex flex-row">
-        <div class="recipes">
+        <div class="row">
             <table class="table table-striped recipes-table" style="width: 100%">
                 <thead>
                     <tr>

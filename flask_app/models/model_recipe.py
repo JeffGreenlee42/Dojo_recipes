@@ -68,21 +68,16 @@ class Recipe:
                     FROM users JOIN recipes
                     ON users.id = recipes.users_id
                     WHERE recipes.id = %(recipe_id)s;"""
-        
-        print(f"inside classmethod get_one: recipe_id is: {recipe_id}")
-        print(f"inside classmethod get_one: query is: {query}")
-        
         recipe = connectToMySQL(db).query_db(query, recipe_id)
         if not recipe:
             return False
-        print(f"in get_one in recipe model: recipe is {recipe}")
+        # get recipe data in displayable format
         recipe[0]['raw_date_made'] = recipe[0]['date_made']
         recipe[0]['date_made'] = recipe[0]['date_made'].strftime("%B %d %Y")
         if recipe[0]['under30'] > 0:
             recipe[0]['under30'] = "Yes"
         else:
             recipe[0]['under30'] = "No"
-        print(f"Final recipe is: {recipe}")
         return recipe[0]
 
     @classmethod

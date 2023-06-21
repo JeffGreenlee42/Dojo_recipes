@@ -7,12 +7,11 @@ bcrypt = Bcrypt(app)
 
 @app.route("/")
 def index():
-    if len(session) < 1:
-        session['user_id'] = ""
-        session['first_name'] = ""
-        session['last_name'] = ""
-        session['email'] = ""
-        session['login_email'] = ""
+    session['user_id'] = ""
+    session['first_name'] = ""
+    session['last_name'] = ""
+    session['email'] = ""
+    session['login_email'] = ""
     return render_template('index.html')
 
 @app.route("/register", methods=["POST"])
@@ -20,21 +19,21 @@ def register():
     session['first_name'] = request.form['first_name']
     session['last_name'] = request.form['last_name']
     session['email'] = request.form['email']
-    data = {
+    user = {
         'first_name': request.form['first_name'],
         'last_name': request.form['last_name'],
         'email': request.form['email'],
         'password': request.form['password'],
         'confirm_password': request.form['password_confirmation']
     }
-    valid = User.validate_user(data)
+    valid = User.validate_user(user)
     if valid:
         pw_hash = bcrypt.generate_password_hash(request.form['password'])
-        data['pw_hash'] = pw_hash
-        user_id = User.add_user(data)
+        user['pw_hash'] = pw_hash
+        user_id = User.add_user(user)
         session['user_id'] = user_id
         return redirect("/recipes")
-    return redirect("/")
+    return render_template("index.html", user = user)
 
 
 @app.route("/login", methods=["POST"])
@@ -50,7 +49,6 @@ def login():
     session['user_id'] = user.id
     session['first_name'] = user.first_name
     if 'user_id' not in session:
-        print("user_id is NOT in session - redirecting to /")
         return redirect('/')
     return redirect("/recipes")
 

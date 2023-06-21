@@ -9,7 +9,6 @@ def recipes():
         return render_template("/")
     all_recipes = []
     recipes = Recipe.get_all()
-    # print(f"in route /recipes: recipes is {recipes}")
     for recipe in recipes:
         under30 = "No"
         if recipe['under30'] > 0:
@@ -40,9 +39,7 @@ def create_recipe():
 def add_recipe():
     if 'user_id' not in session:
         return redirect("/logout")
-    print("in controller add_recipe - About to call model add_recipe()")
     valid = Recipe.validate_recipe(request.form)
-    print(f" After validating recipe: valid is {valid}")
     if valid:
         Recipe.add_recipe(request.form)
         return redirect("/recipes")
@@ -53,12 +50,6 @@ def add_recipe():
         'date_made': request.form['date_made'],
         'under30': request.form['under30']
     }
-    print(f"in route new_recipe(): recipe is {recipe}")
-    session['name'] = request.form['recipe_name']
-    session['description'] = request.form['description']
-    session['instructions'] = request.form['instructions']
-    session['date_made'] = request.form['date_made']
-    session['under30'] = request.form['under30']
     return render_template("new_recipe.html", recipe = recipe)
 
     return redirect("/recipes")
@@ -66,7 +57,6 @@ def add_recipe():
 @app.route("/recipes/get_one/<int:recipe_id>")
 def get_one(recipe_id):
     recipe = Recipe.get_one(recipe_id)
-    print(f"recipe is {recipe}")
     if not recipe:
         return redirect("/recipes")
     return render_template("display_recipe.html", recipe = recipe)
@@ -90,7 +80,6 @@ def change_recipe():
 
 @app.route("/recipes/delete/<int:recipe_id>")
 def delete_recipe(recipe_id):
-    print(f"in route delete_recipe: recipe_id is {recipe_id}")
     recipe_id = {
         'recipe_id': recipe_id
     }
